@@ -7,8 +7,8 @@ void initialize_data(
     std::vector<std::string> &names,
     std::map<std::string,std::vector<int>> &q_assignments_map)
 {
-    basic_questions = {1,2,5,6,7};
-    intermediate_questions = {3,4,8,9};
+    basic_questions = {1, 2, 5, 6, 7};
+    intermediate_questions = {3, 4, 8, 9};
     names = {"Ally", "Marcus", "Julia", "Max", "Tommy"};
     for (const auto & name : names)
     {
