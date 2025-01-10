@@ -24,7 +24,7 @@ void assign_questions(
 
 void display_assignments( const std::map<std::string, std::vector<int>> &q_assignments_map)
 {
-    for (const auto & name : q_assignments_map)
+    for (const std::pair<std::string, std::vector<int>> & name : q_assignments_map)
     {
         std::cout << name.first << ": ";
         for (const int& q : name.second)
