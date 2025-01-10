@@ -74,8 +74,6 @@ int main(int argc, char** arg_v)
         read_names(name_file, names);
         name_file.close();
         
-        std::cout << "reading qs" << std::endl;
-
         for (int i = 2; i < argc; i++) {
             std::ifstream tmp_file = std::ifstream(arg_v[i]);
             if (tmp_file.fail()) {
