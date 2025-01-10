@@ -1,13 +1,14 @@
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <set>
 #include <stdexcept>
 #include <string>
 #include <vector>
 
 void assign_questions(
     const std::vector<int> &questions,
-    std::map<std::string, std::vector<int>> &q_assignments_map,
+    std::map<std::string, std::set<int>> &q_assignments_map,
     const std::vector<std::string> &names
 ) {
     int num_questions = questions.size();
@@ -17,14 +18,14 @@ void assign_questions(
         for (int j = 0; j < 3; j++)
         {
             const std::string& assigned_name = names[(i + j) % num_names];
-            q_assignments_map[assigned_name].push_back(questions[i]);
+            q_assignments_map[assigned_name].insert(questions[i]);
         }
     }
 }
 
-void display_assignments( const std::map<std::string, std::vector<int>> &q_assignments_map)
+void display_assignments( const std::map<std::string, std::set<int>> &q_assignments_map)
 {
-    for (const std::pair<std::string, std::vector<int>> & name : q_assignments_map)
+    for (const std::pair<std::string, std::set<int>> & name : q_assignments_map)
     {
         std::cout << name.first << ": ";
         for (const int& q : name.second)
@@ -89,7 +90,7 @@ int main(int argc, char** arg_v)
         return 0;
     }
 
-    std::map<std::string, std::vector<int>> q_assignments_map;
+    std::map<std::string, std::set<int>> q_assignments_map;
     for (const std::string& name : names)
     {
         q_assignments_map[name];
