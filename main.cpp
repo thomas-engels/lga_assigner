@@ -22,7 +22,6 @@ void assign_questions(
     std::vector<std::string> &names)
 {
     int num_questions = std::size(questions);
-    // if using older version of C++, use (sizeof(questions) / size(int)) to get the vector length etc.
     int num_names = std::size(names);
     for (int i = 0; i < num_questions; i++)
     {
