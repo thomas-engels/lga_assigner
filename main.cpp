@@ -1,13 +1,17 @@
+#include <fstream>
 #include <iostream>
 #include <map>
+#include <stdexcept>
+#include <string>
+#include <vector>
 
 void assign_questions(
-    std::vector<int> &questions,
+    const std::vector<int> &questions,
     std::map<std::string, std::vector<int>> &q_assignments_map,
-    std::vector<std::string> &names)
-{
-    int num_questions = std::size(questions);
-    int num_names = std::size(names);
+    const std::vector<std::string> &names
+) {
+    int num_questions = questions.size();
+    int num_names = names.size();
     for (int i = 0; i < num_questions; i++)
     {
         for (int j = 0; j < 3; j++)
@@ -18,13 +22,12 @@ void assign_questions(
     }
 }
 
-void display_assignments(
-    const std::map<std::string, std::vector<int>> &q_assignments_map)
+void display_assignments( const std::map<std::string, std::vector<int>> &q_assignments_map)
 {
     for (const auto & name : q_assignments_map)
     {
         std::cout << name.first << ": ";
-        for (const auto & q : name.second)
+        for (const int& q : name.second)
         {
             std::cout << q << " ";
         }
@@ -32,21 +35,71 @@ void display_assignments(
     }
 }
 
+void read_names(std::ifstream& file, std::vector<std::string>& names) {
+    while (!file.eof()) {
+        std::string s;
+        std::getline(file, s);
+        names.push_back(s);
+    }
+}
 
-int main()
+std::vector<int> read_questions(std::ifstream& file) {
+    std::vector<int> v;
+    while (!file.eof()) {
+        int x;
+        file >> x;
+
+        if (file.fail()) {
+            throw std::invalid_argument("Non integer in question file");
+        }
+
+        v.push_back(x);
+    }
+
+    return v;
+}
+
+
+int main(int argc, char** arg_v)
 {
+    std::vector<std::string> names;
+    std::vector<std::vector<int>> questions;
 
-    std::vector<int> intermediate_questions = {3, 4, 8, 9};
-    std::vector<int> basic_questions = {1, 2, 5, 6, 7};
-    std::vector<std::string> names = {"Ally", "Marcus", "Julia", "Max", "Tommy"};
+    if (argc > 1) {
+        std::ifstream name_file = std::ifstream(arg_v[1]);
+        if (name_file.fail()) {
+            std::cout << arg_v[1] << " was not a valid file" << std::endl;
+            return -1;
+        }
+        read_names(name_file, names);
+        name_file.close();
+        
+        std::cout << "reading qs" << std::endl;
+
+        for (int i = 2; i < argc; i++) {
+            std::ifstream tmp_file = std::ifstream(arg_v[i]);
+            if (tmp_file.fail()) {
+                std::cout << arg_v[i] << "was not a valid file skipping" << std::endl;
+                continue;
+            }
+            std::vector<int> qs = read_questions(tmp_file);
+            questions.push_back(qs);
+            tmp_file.close();
+        }
+    } else {
+        std::cout << "No file names provided" << std::endl;
+        return 0;
+    }
+
     std::map<std::string, std::vector<int>> q_assignments_map;
-    for (const auto & name : names)
+    for (const std::string& name : names)
     {
         q_assignments_map[name];
     }
 
-    assign_questions(basic_questions, q_assignments_map, names);
-    assign_questions(intermediate_questions, q_assignments_map, names);
+    for (int i = 0; i < questions.size(); i++) {
+        assign_questions(questions[i], q_assignments_map, names);
+    }
 
     display_assignments(q_assignments_map);
 
