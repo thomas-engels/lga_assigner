@@ -4,6 +4,7 @@
 #include <set>
 #include <stdexcept>
 #include <string>
+#include <utility>
 #include <vector>
 
 void assign_questions(
@@ -21,6 +22,27 @@ void assign_questions(
             q_assignments_map[assigned_name].insert(questions[i]);
         }
     }
+}
+
+void equalize_assignments(
+    const int question_count,
+    std::map<std::string, std::set<int>>& q_assignments_map
+) {
+    int max = 0;
+    for (const std::pair<std::string, std::set<int>>& p: q_assignments_map) {
+        max = std::max(max, (int)p.second.size());
+    }
+
+    for ( auto & p: q_assignments_map) {
+        if (p.second.size() < max - 2) {
+            // asing questions
+            int qs_to_assing = (max - 1) - p.second.size();
+            for (int i = 0; p.second.size() < max - 2; i++) {
+                p.second.insert((i % question_count) + 1);
+            }
+        }
+    }
+
 }
 
 void display_assignments( const std::map<std::string, std::set<int>> &q_assignments_map)
@@ -63,6 +85,7 @@ std::vector<int> read_questions(std::ifstream& file) {
 
 int main(int argc, char** arg_v)
 {
+    int q_count = 0;
     std::vector<std::string> names;
     std::vector<std::vector<int>> questions;
 
@@ -82,6 +105,7 @@ int main(int argc, char** arg_v)
                 continue;
             }
             std::vector<int> qs = read_questions(tmp_file);
+            q_count += qs.size();
             questions.push_back(qs);
             tmp_file.close();
         }
@@ -99,6 +123,8 @@ int main(int argc, char** arg_v)
     for (int i = 0; i < questions.size(); i++) {
         assign_questions(questions[i], q_assignments_map, names);
     }
+
+    equalize_assignments(q_count, q_assignments_map);
 
     display_assignments(q_assignments_map);
 
