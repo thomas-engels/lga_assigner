@@ -1,6 +1,6 @@
 # Struggle to quickly assign the LGA questions?
 
-*This script helps you easily assign the questions; accounting for question difficulty and meeting the three people per question requirement.*
+*This script helps you easily assign the questions amongst your group; accounting for question difficulty and meeting the three people per question requirement.*
 
 ---
 Directions:
