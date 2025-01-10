@@ -1,21 +1,6 @@
 #include <iostream>
 #include <map>
 
-void initialize_data(
-    std::vector<int> &basic_questions,
-    std::vector<int> &intermediate_questions,
-    std::vector<std::string> &names,
-    std::map<std::string,std::vector<int>> &q_assignments_map)
-{
-    basic_questions = {1, 2, 5, 6, 7};
-    intermediate_questions = {3, 4, 8, 9};
-    names = {"Ally", "Marcus", "Julia", "Max", "Tommy"};
-    for (const auto & name : names)
-    {
-        q_assignments_map[name];
-    }
-}
-
 void assign_questions(
     std::vector<int> &questions,
     std::map<std::string, std::vector<int>> &q_assignments_map,
@@ -48,14 +33,17 @@ void display_assignments(
 }
 
 
-int main() {
+int main()
+{
 
-    std::vector<int> intermediate_questions;
-    std::vector<int> basic_questions;
-    std::vector<std::string> names;
+    std::vector<int> intermediate_questions = {3, 4, 8, 9};
+    std::vector<int> basic_questions = {1, 2, 5, 6, 7};
+    std::vector<std::string> names = {"Ally", "Marcus", "Julia", "Max", "Tommy"};
     std::map<std::string, std::vector<int>> q_assignments_map;
-
-    initialize_data(basic_questions, intermediate_questions, names, q_assignments_map);
+    for (const auto & name : names)
+    {
+        q_assignments_map[name];
+    }
 
     assign_questions(basic_questions, q_assignments_map, names);
     assign_questions(intermediate_questions, q_assignments_map, names);
