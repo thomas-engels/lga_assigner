@@ -33,12 +33,20 @@ void equalize_assignments(
         max = std::max(max, (int)p.second.size());
     }
 
-    for ( auto & p: q_assignments_map) {
-        if (p.second.size() < max - 2) {
-            // asing questions
+    for ( std::pair<const std::string, std::set<int>> &p: q_assignments_map) {
+        if (p.second.size() < max - 1) {
+            int last_q = 0;
+
+            for (const int& i : p.second) {
+                last_q = std::max(i, last_q);
+            }
+
             int qs_to_assing = (max - 1) - p.second.size();
-            for (int i = 0; p.second.size() < max - 2; i++) {
-                p.second.insert((i % question_count) + 1);
+            std::cout << p.first << " assining: " << qs_to_assing << std::endl;
+            for (int i = 0; i < qs_to_assing; last_q++) {
+                if (p.second.insert((last_q % question_count) + 1).second) {
+                    i++;
+                }
             }
         }
     }
