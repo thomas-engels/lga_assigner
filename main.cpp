@@ -50,6 +50,7 @@ int main()
     std::vector<int> intermediate_questions = {1, 2, 5};
     std::vector<int> basic_questions = {3,4, 6};
     std::vector<std::string> names = {"Ally", "Marcus", "Julia", "Max", "Tommy"};
+    std::vector<std::string> names_reverse = {"Tommy", "Max", "Julia", "Marcus", "Ally"};
     std::map<std::string, std::vector<int>> q_assignments_map;
     for (const auto & name : names)
     {
@@ -57,7 +58,7 @@ int main()
     }
 
     assign_questions(basic_questions, q_assignments_map, names);
-    assign_questions(intermediate_questions, q_assignments_map, names);
+    assign_questions(intermediate_questions, q_assignments_map, names_reverse);
 
     display_assignments(q_assignments_map);
 
