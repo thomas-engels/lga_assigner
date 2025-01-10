@@ -1,10 +1,10 @@
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 #include <map>
 #include <set>
 #include <stdexcept>
 #include <string>
-#include <utility>
 #include <vector>
 
 void assign_questions(
@@ -41,9 +41,8 @@ void equalize_assignments(
                 last_q = std::max(i, last_q);
             }
 
-            int qs_to_assing = (max - 1) - p.second.size();
-            std::cout << p.first << " assining: " << qs_to_assing << std::endl;
-            for (int i = 0; i < qs_to_assing; last_q++) {
+            int qs_to_assign = (max - 1) - p.second.size();
+            for (int i = 0; i < qs_to_assign; last_q++) {
                 if (p.second.insert((last_q % question_count) + 1).second) {
                     i++;
                 }
@@ -55,9 +54,15 @@ void equalize_assignments(
 
 void display_assignments( const std::map<std::string, std::set<int>> &q_assignments_map)
 {
+
+    int longest_name = 0;
+    for (const std::pair<std::string, std::set<int>> & name : q_assignments_map) {
+        longest_name = std::max(longest_name, (int)name.first.size());
+    }
+
     for (const std::pair<std::string, std::set<int>> & name : q_assignments_map)
     {
-        std::cout << name.first << ": ";
+        std::cout << std::left << std::setw(longest_name) << name.first << ": ";
         for (const int& q : name.second)
         {
             std::cout << q << " ";
