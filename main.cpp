@@ -24,6 +24,37 @@ void assign_questions(
     }
 }
 
+
+void assign_questions_triple_approach(
+    std::vector<int> &questions,
+    std::map<std::string, std::set<int>> &q_assignments_map,
+    std::vector<std::string> &names)
+{
+    int num_questions = std::size(questions);
+    int num_names = std::size(names);
+
+    std::queue<int> triple_questions;
+    for (int i = 0; i < num_questions; ++i)
+    {
+        for (int j = 0; j < 3; ++j)
+        {
+            triple_questions.push(questions[i]);
+        }
+    }
+
+    int i = 0;
+    while (!triple_questions.empty())
+    {
+        int question = triple_questions.front();
+        std::string & name = names[i % num_names];
+        q_assignments_map[name].insert(question);
+        triple_questions.pop();
+        i += 1;
+    }
+}
+
+
+
 void equalize_assignments(
     const int question_count,
     std::map<std::string, std::set<int>>& q_assignments_map
@@ -134,10 +165,10 @@ int main(int argc, char** arg_v)
     }
 
     for (int i = 0; i < questions.size(); i++) {
-        assign_questions(questions[i], q_assignments_map, names);
+        assign_questions_triple_approach(questions[i], q_assignments_map, names);
     }
 
-    equalize_assignments(q_count, q_assignments_map);
+    //equalize_assignments(q_count, q_assignments_map);
 
     display_assignments(q_assignments_map);
 
