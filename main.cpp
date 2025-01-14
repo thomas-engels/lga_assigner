@@ -29,27 +29,18 @@ void assign_questions(
 void assign_questions_triple_approach(
     std::vector<int> &questions,
     std::map<std::string, std::set<int>> &q_assignments_map,
-    std::vector<std::string> &names)
+    const std::vector<std::string> &names)
 {
     int num_questions = std::size(questions);
     int num_names = std::size(names);
 
-    std::queue<int> triple_questions;
-    for (int i = 0; i < num_questions; ++i)
-    {
-        for (int j = 0; j < 3; ++j)
-        {
-            triple_questions.push(questions[i]);
-        }
-    }
-
     int i = 0;
-    while (!triple_questions.empty())
+    while (!questions.empty())
     {
-        int question = triple_questions.front();
-        std::string & name = names[i % num_names];
+        int question = questions.back();
+        const std::string & name = names[i % num_names];
         q_assignments_map[name].insert(question);
-        triple_questions.pop();
+        questions.pop_back();
         i += 1;
     }
 }
@@ -121,7 +112,9 @@ std::vector<int> read_questions(std::ifstream& file) {
             throw std::invalid_argument("Non integer in question file");
         }
 
-        v.push_back(x);
+        for (int i= 0; i < 3; i++) {
+            v.push_back(x);
+        }
     }
 
     return v;
