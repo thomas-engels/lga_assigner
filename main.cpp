@@ -5,10 +5,11 @@
 void assign_questions(
     std::vector<int> &questions,
     std::map<std::string, std::vector<int>> &q_assignments_map,
-    std::vector<std::string> &names)
+    std::string names [],
+    int names_size)
 {
     int num_questions = std::size(questions);
-    int num_names = std::size(names);
+    // int num_names = sizeof(names)/sizeof(std::string);
 
     std::queue<int> triple_questions;
     for (int i = 0; i < num_questions; ++i)
@@ -23,7 +24,7 @@ void assign_questions(
     while (!triple_questions.empty())
     {
         int question = triple_questions.front();
-        std::string & name = names[i % num_names];
+        std::string & name = names[i % names_size];
         q_assignments_map[name].push_back(question);
         triple_questions.pop();
         i += 1;
@@ -47,10 +48,12 @@ void display_assignments(
 
 int main()
 {
-    std::vector<int> intermediate_questions = {1, 2, 3, 4};
-    // std::vector<int> basic_questions = {3, 4, 6};
-    std::vector<std::string> names = {"Ally", "Marcus", "Tommy", "Julia", "Max"};
-    std::vector<std::string> names_reverse = { "Max", "Julia","Tommy", "Marcus", "Ally"};
+    std::vector<int> intermediate_questions = {2, 3, 4};
+    std::vector<int> basic_questions = {1, 5};
+    std::string names[] = {"Marcus", "Ally", "Tommy","Max", "Julia"};
+    int names_length = std::size(names);
+    std::string names_reverse[] = { "Marcus", "Ally","Tommy", "Max", "Julia"};
+
     std::map<std::string, std::vector<int>> q_assignments_map;
     for (const auto & name : names)
     {
@@ -58,7 +61,7 @@ int main()
     }
 
     // assign_questions(basic_questions, q_assignments_map, names);
-    assign_questions(intermediate_questions, q_assignments_map, names_reverse);
+    assign_questions(intermediate_questions, q_assignments_map, names_reverse, names_length);
 
     display_assignments(q_assignments_map);
 
