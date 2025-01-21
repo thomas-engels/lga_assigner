@@ -52,7 +52,7 @@ int main()
     std::vector<int> basic_questions = {1, 5};
     std::string names[] = {"Marcus", "Ally", "Tommy","Max", "Julia"};
     int names_length = std::size(names);
-    std::string names_reverse[] = { "Marcus", "Ally","Tommy", "Max", "Julia"};
+    std::string names_reverse[] = {"Tommy", "Julia", "Max", "Ally", "Marcus"};
 
     std::map<std::string, std::vector<int>> q_assignments_map;
     for (const auto & name : names)
@@ -60,7 +60,7 @@ int main()
         q_assignments_map[name];
     }
 
-    // assign_questions(basic_questions, q_assignments_map, names);
+    assign_questions(basic_questions, q_assignments_map, names, names_length);
     assign_questions(intermediate_questions, q_assignments_map, names_reverse, names_length);
 
     display_assignments(q_assignments_map);
