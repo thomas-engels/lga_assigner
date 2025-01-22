@@ -81,10 +81,9 @@ std::vector<int> read_questions(
     std::ifstream& file)
 {
     std::vector<int> v;
-    while (!file.eof())
+    int x;
+    while (file >> x)
     {
-        int x;
-        file >> x;
         v.push_back(x);
     }
     return v;
