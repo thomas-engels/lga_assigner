@@ -2,17 +2,17 @@
 #include <iostream>
 #include <iomanip>
 #include <map>
-#include <set>
 #include <stdexcept>
 #include <string>
-#include <vector>
+#include <queue>
 #include <algorithm>
 
 void assign_questions(
     std::vector<int> &questions,
     std::map<std::string, std::vector<int>> &q_assignments_map,
     std::vector<std::string> names,
-    int names_size) {
+    int names_size)
+{
     int num_questions = std::size(questions);
     std::queue<int> triple_questions;
     for (int i = 0; i < num_questions; ++i)
@@ -69,11 +69,13 @@ void read_names(
     std::ifstream& file,
     std::vector<std::string>& names)
 {
-    while (!file.eof())
+    std::string name;
+    while(std::getline(file, name))
     {
-        std::string s;
-        std::getline(file, s);
-        names.push_back(s);
+        if(!name.empty())
+        {
+            names.push_back(name);
+        }
     }
 }
 
